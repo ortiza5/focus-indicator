@@ -11,15 +11,19 @@ chrome.action.onClicked.addListener(() => {
     },
     (options) => {
       const enabled = !options.enabled;
-      let iconPath = "";
+      let iconStatus = "enabled";
 
-      if (enabled) {
-        iconPath = "icons/enabled/48.png";
-      } else {
-        iconPath = "icons/disabled/48.png";
+      if (!enabled) {
+        iconStatus = "disabled";
       }
 
-      chrome.action.setIcon({ path: iconPath });
+      chrome.action.setIcon({
+        path: {
+          16: "../icons/" + iconStatus + "/16.png",
+          48: "../icons/" + iconStatus + "/48.png",
+          128: "../icons/" + iconStatus + "/128.png",
+        },
+      });
 
       chrome.storage.local.set(
         {
