@@ -30,7 +30,9 @@ chrome.action.onClicked.addListener(() => {
           enabled,
         },
         () => {
-          chrome.tabs.executeScript(null, { file: "js/background-helper.js" });
+          chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+            chrome.scripting.executeScript({ files: ["js/background-helper.js"], target: { tabId: tabs[0].id } });
+          });
         }
       );
     }
