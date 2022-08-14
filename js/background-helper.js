@@ -1,6 +1,80 @@
-const styleUtil = require('./style-util.js');
+const FOCUS_INDICATOR = {
+  ENABLED: true,
+  COLOR: "#50e3c2",
+  WIDTH: "2px",
+};
 
-styleUtil.controlStyle();
+function getStyleContent(options) {
+  return `
+    @keyframes outline-pulse {
+      from {
+        outline-color:  ${options.color};
+        outline-offset: -${options.width};
+      }
 
-const event = new Event('updateShow');
+      90% {
+        outline-color: transparent;
+        outline-offset: -1px;
+      }
+
+      to {
+        outline-color: ${options.color};
+        outline-offset: 0;
+      }
+    }
+
+    :focus {
+      outline: ${options.width} solid ${options.color} !important;
+      outline-offset: 0 !important;
+      animation: outline-pulse 4s;
+    }
+  `;
+}
+
+function getStyleNode(options) {
+  const styleNode = document.createElement("style");
+  styleNode.setAttribute("data-ref", "focus-indicator");
+  styleNode.innerHTML = getStyleContent(options);
+  return styleNode;
+}
+
+function removeStyle() {
+  const head = document.head;
+  const styleNodes = document.querySelectorAll('[data-ref="focus-indicator"]');
+
+  styleNodes.forEach((styleNode) => {
+    if (styleNode) {
+      head.removeChild(styleNode);
+    }
+  });
+}
+
+function addStyle(options) {
+  const head = document.head;
+  const styleNode = getStyleNode(options);
+
+  head.appendChild(styleNode);
+}
+
+function controlStyle() {
+  chrome.storage.local.get(
+    {
+      enabled: FOCUS_INDICATOR.ENABLED,
+      color: FOCUS_INDICATOR.COLOR,
+      width: FOCUS_INDICATOR.WIDTH,
+    },
+    (options) => {
+      if (options.enabled) {
+        removeStyle();
+        addStyle(options);
+      } else {
+        removeStyle();
+      }
+    }
+  );
+}
+
+controlStyle();
+
+const event = new Event("updateShow");
 document.dispatchEvent(event);
