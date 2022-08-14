@@ -7,6 +7,8 @@ Focus Indicator (focus-indicator)
 
 Display focus indicator for the active intractable element in a webpage.
 
+![Animation - Focus Indicator Chrome extension in action](http://i.imgur.com/cVp2hlL.gif)
+
 ## Fork Details
 
 The functionality hasn't been altered from the original, but the extension has been updated to manifest V3 and the icon has been changed to more easily distinguish between the enabled and disabled states.
@@ -20,8 +22,6 @@ The structure of the repo has also been rearranged to allow easy installation as
   2. Unzip the downloaded file and place the folder in a suitable permanent location. 
   3. On your Chromium browser's extensions page enable **Developer mode**.
   4. Click **Load unpacked** and select the folder of the repository you downloaded.
-
-![Animation - Focus Indicator Chrome extension in action](http://i.imgur.com/cVp2hlL.gif)
 
 ## Why?
 
