@@ -4,7 +4,7 @@ const FOCUS_INDICATOR = {
   WIDTH: "2px",
 };
 
-chrome.browserAction.onClicked.addListener(() => {
+chrome.action.onClicked.addListener(() => {
   chrome.storage.local.get(
     {
       enabled: true,
@@ -19,7 +19,7 @@ chrome.browserAction.onClicked.addListener(() => {
         iconPath = "icons/disabled/48.png";
       }
 
-      chrome.browserAction.setIcon({ path: iconPath });
+      chrome.action.setIcon({ path: iconPath });
 
       chrome.storage.local.set(
         {
